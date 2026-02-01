@@ -76,7 +76,9 @@ const App = () => {
   ];
 
   const handleWhatsApp = (pkgName) => {
-    const message = encodeURIComponent(`Hola GamaTech Security, me interesa cotizar el ${pkgName}. Quedo atento a la visita técnica.`);
+    // Limpia el nombre para quitar el (X#)
+    const cleanName = pkgName.split('(')[0].trim();
+    const message = encodeURIComponent(`Buenas Tardes, me agrado la idea del paquete ${cleanName}, ¿Podría agendar una visita contigo?`);
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
