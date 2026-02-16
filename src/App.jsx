@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
   Camera, 
-  ShieldCheck, 
   HardDrive, 
   Wrench, 
   Smartphone, 
@@ -10,7 +9,11 @@ import {
   Info,
   Zap,
   CloudRain,
-  Clock
+  Clock,
+  Server,
+  Network,
+  ShieldAlert,
+  Database
 } from 'lucide-react';
 
 const App = () => {
@@ -75,29 +78,52 @@ const App = () => {
     }
   ];
 
-  const handleWhatsApp = (pkgName) => {
-    // Limpia el nombre para quitar el (X#)
-    const cleanName = pkgName.split('(')[0].trim();
-    const message = encodeURIComponent(`Buenas Tardes, me agrado la idea del paquete ${cleanName}, ¿Podría agendar una visita contigo?`);
+  const handleWhatsApp = (pkgName, customMessage = null) => {
+    let messageText = "";
+    if (customMessage) {
+      messageText = customMessage;
+    } else {
+      const cleanName = pkgName.split('(')[0].trim();
+      messageText = `Buenas Tardes, me agrado la idea del paquete ${cleanName}, ¿Podría agendar una visita contigo?`;
+    }
+    
+    const message = encodeURIComponent(messageText);
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
+  const GamaLogo = () => (
+    <div className="relative w-16 h-16 flex items-center justify-center">
+      <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full drop-shadow-lg">
+        <path 
+          d="M50 5 L85 20 L85 50 C85 75 50 95 50 95 C50 95 15 75 15 50 L15 20 L50 5 Z" 
+          fill="url(#logoGradient)" 
+          stroke="white" 
+          strokeWidth="2"
+        />
+        <defs>
+          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="100%" stopColor="#8b5cf6" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div className="relative z-10 font-black text-2xl tracking-tighter italic text-white">G</div>
+      <div className="absolute top-1/4 right-1/4 w-2 h-2 bg-cyan-300 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+      <div className="absolute bottom-1/3 left-1/4 w-1.5 h-1.5 bg-blue-300 rounded-full shadow-[0_0_8px_rgba(147,197,253,0.8)]" />
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-[#0f172a] text-white font-sans selection:bg-blue-500/30 pb-10">
-      {/* Background Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
-        
-        {/* Header */}
         <header className="text-center mb-16 space-y-4">
-          <div className="flex justify-center items-center space-x-3 mb-2">
-            <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg">
-              <ShieldCheck size={40} className="text-white" />
-            </div>
+          <div className="flex flex-col items-center space-y-4 mb-2">
+            <GamaLogo />
             <h1 className="text-4xl font-bold tracking-tight">
               GamaTech <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Security</span>
             </h1>
@@ -107,7 +133,6 @@ const App = () => {
           </p>
         </header>
 
-        {/* Core Values */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
           <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-3xl">
             <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
@@ -132,8 +157,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Pricing Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {packages.map((pkg) => (
             <div 
               key={pkg.id}
@@ -174,7 +198,47 @@ const App = () => {
           ))}
         </div>
 
-        {/* Terms */}
+        {/* Sección de Soluciones Avanzadas Optimizada */}
+        <div className="mb-12 relative group overflow-hidden">
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[2.6rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+          <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-8 md:p-10 transition-all duration-300">
+            <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+              <Database size={180} />
+            </div>
+            
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                <div className="relative">
+                  <div className="p-5 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl border border-white/10 shadow-2xl">
+                    <Server className="text-blue-400" size={40} />
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 p-2 bg-[#0f172a] rounded-full border border-white/10">
+                    <ShieldAlert size={16} className="text-purple-400" />
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] font-bold uppercase tracking-widest text-blue-300">
+                    Proyectos Empresariales
+                  </div>
+                  <h3 className="text-2xl font-black text-white italic tracking-wide">Sistemas de Alta Capacidad</h3>
+                  <p className="text-gray-400 text-sm max-w-xl leading-relaxed">
+                    Diseñamos e instalamos infraestructuras robustas mediante <span className="text-blue-400 font-bold uppercase tracking-tighter">DVR</span> o <span className="text-purple-400 font-bold uppercase tracking-tighter">NVR</span> cableados. Ideal para seguridad avanzada, comercios y residencias de gran escala que requieren grabación centralizada y máxima estabilidad.
+                  </p>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => handleWhatsApp("Instalación Cableada", "Hola GamaTech Security, me interesa una solución avanzada de CCTV con DVR/NVR. ¿Podríamos agendar una visita técnica para evaluar mi proyecto?")}
+                className="whitespace-nowrap px-10 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl font-black text-sm uppercase tracking-widest transition-all duration-500 flex items-center gap-3 hover:gap-5 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-95 shadow-xl group"
+              >
+                Cotiza aquí
+                <ChevronRight size={20} className="transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div className="mt-12 p-6 bg-white/5 border border-white/5 rounded-3xl flex items-start gap-4">
           <div className="mt-1 p-2 bg-blue-500/10 rounded-lg">
             <Info size={18} className="text-blue-400" />
