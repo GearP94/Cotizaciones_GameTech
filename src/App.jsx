@@ -62,7 +62,20 @@ const App = () => {
       ],
       color: "from-purple-600 to-pink-500"
     },
-    
+    {
+      id: 4,
+      name: "Plan Diamante (X4)",
+      price: 7200,
+      desc: "Cobertura total 360° para tu propiedad.",
+      features: [
+        "4 Cámaras Tapo Exterior HD",
+        "4 MicroSD WD Purple 128GB",
+        "Máxima vigilancia 24/7",
+        "Configuración multidispositivo",
+        "1 Año de Garantía en Soporte"
+      ],
+      color: "from-cyan-600 to-blue-700"
+    }
   ];
 
   const handleWhatsApp = (pkgName, customMessage = null) => {
